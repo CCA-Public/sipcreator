@@ -29,7 +29,7 @@ fi
 sudo touch '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo '[Desktop Entry]' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo 'Type=Application' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Name=Folder Processor' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
+echo 'Name=SIP Creator' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo 'Exec=/usr/share/ccatools/sipcreator/launch' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo 'Icon=' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 
