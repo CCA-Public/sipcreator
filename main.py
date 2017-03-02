@@ -55,20 +55,20 @@ class CheckableDirModel(QDirModel):
 
 class SIPThread(QThread):
 
-    def __init__(self, files_to_process, destination, bagfiles, piiscan):
+    def __init__(self, files_to_process, destination, sip_dir, bagfiles, piiscan):
         QThread.__init__(self)
         self.files_to_process = files_to_process
         self.destination = destination
+        self.sip_dir = sip_dir
         self.bagfiles = bagfiles
         self.piiscan = piiscan
 
     def __del__(self):
         self.wait()
 
-    def create_sip(self, files_to_process, destination, bagfiles, piiscan):
+    def create_sip(self, files_to_process, sip_dir, bagfiles, piiscan):
         
         # set paths and create dirs
-        sip_dir = os.path.abspath(destination)
         object_dir = os.path.join(sip_dir, 'objects')
         metadata_dir = os.path.join(sip_dir, 'metadata')
         subdoc_dir = os.path.join(metadata_dir, 'submissionDocumentation')
@@ -95,9 +95,9 @@ class SIPThread(QThread):
         files_abs = os.path.abspath(object_dir)
 
         if piiscan == True: # brunnhilde with bulk_extractor
-            subprocess.call("brunnhilde.py -zbw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(self.destination)), shell=True)
+            subprocess.call("brunnhilde.py -zbw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(sip_dir)), shell=True)
         else: # brunnhilde without bulk_extractor
-            subprocess.call("brunnhilde.py -zw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(self.destination)), shell=True)
+            subprocess.call("brunnhilde.py -zw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(sip_dir)), shell=True)
 
         # write checksums
         if bagfiles == True: # bag entire SIP
@@ -121,11 +121,11 @@ class SIPThread(QThread):
         s = s.replace('.0', '')
         return '%s %s' % (s,size_name[i])
 
-    def create_spreadsheet(self, destination, bagfiles):
+    def create_spreadsheet(self, destination, sip_dir, bagfiles):
 
         # open description spreadsheet
         try:
-            spreadsheet = open('/home/bcadmin/Desktop/description.csv', 'w')
+            spreadsheet = open(os.path.join(self.destination, 'description.csv'), 'w')
             writer = csv.writer(spreadsheet, quoting=csv.QUOTE_NONNUMERIC)
             header_list = ['Parent ID', 'Identifier', 'Title', 'Archive Creator', 'Date expression', 'Date start', 'Date end', 
         'Level of description', 'Extent and medium', 'Scope and content', 'Arrangement (optional)', 'Accession number', 
@@ -139,86 +139,80 @@ class SIPThread(QThread):
         except:
             sys.exit('There was an error creating the processing spreadsheet.')
 
-        # get abspath of entry
-        item = os.path.abspath(destination)
-        
-        # test if entry if directory
-        if os.path.isdir(item):
-        
-            # gather info from files
+        # gather info from files
+        if bagfiles == True:
+            objects = os.path.abspath(os.path.join(sip_dir, 'data', 'objects'))
+        else:
+            objects = os.path.abspath(os.path.join(sip_dir, 'objects'))
+
+        number_files = 0
+        total_bytes = 0
+        mdates = []
+
+        for root, directories, filenames in os.walk(objects):
+            for filename in filenames:
+                # add to file count
+                number_files += 1
+                # add number of bytes to total
+                filepath = os.path.join(root, filename)
+                total_bytes += os.path.getsize(filepath)
+                # add modified date to list
+                modified = os.path.getmtime(filepath)
+                modified_date = str(datetime.datetime.fromtimestamp(modified))
+                mdates.append(modified_date)
+
+        # build extent statement
+        size_readable = self.convert_size(total_bytes)
+        if number_files == 1:
+            extent = "1 digital file (%s)" % size_readable
+        elif number_files == 0:
+            extent = "EMPTY"
+        else:
+            extent = "%d digital files (%s)" % (number_files, size_readable)
+
+        # build date statement
+        if mdates:
+            date_earliest = min(mdates)[:10]
+            date_latest = max(mdates)[:10]
+        else:
+            date_earliest = 'N/A'
+            date_latest = 'N/A'
+        if date_earliest == date_latest:
+            date_statement = '%s' % date_earliest[:4]
+        else:
+            date_statement = '%s - %s' % (date_earliest[:4], date_latest[:4])
+
+        # gather info from burnnhilde & write scope and content note
+        if extent == 'EMPTY':
+            scopecontent = ''
+        else:
+            fileformats = []
             if bagfiles == True:
-                objects = os.path.abspath(os.path.join(item, 'data', 'objects'))
+                fileformat_csv = os.path.join(sip_dir, 'data', 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(sip_dir), 'csv_reports', 'formats.csv')
             else:
-                objects = os.path.abspath(os.path.join(item, 'objects'))
+                fileformat_csv = os.path.join(sip_dir, 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(sip_dir), 'csv_reports', 'formats.csv')
+            with open(fileformat_csv, 'r') as f:
+                reader = csv.reader(f)
+                reader.next()
+                for row in itertools.islice(reader, 5):
+                    fileformats.append(row[0])
+            fileformats = [element or 'Unidentified' for element in fileformats] # replace empty elements with 'Unidentified'
+            formatlist = ', '.join(fileformats) # format list of top file formats as human-readable
+            
+            # create scope and content note
+            scopecontent = 'Most common file formats: %s' % (formatlist)
 
-            number_files = 0
-            total_bytes = 0
-            mdates = []
-
-            for root, directories, filenames in os.walk(objects):
-                for filename in filenames:
-                    # add to file count
-                    number_files += 1
-                    # add number of bytes to total
-                    filepath = os.path.join(root, filename)
-                    total_bytes += os.path.getsize(filepath)
-                    # add modified date to list
-                    modified = os.path.getmtime(filepath)
-                    modified_date = str(datetime.datetime.fromtimestamp(modified))
-                    mdates.append(modified_date)
-
-            # build extent statement
-            size_readable = self.convert_size(total_bytes)
-            if number_files == 1:
-                extent = "1 digital file (%s)" % size_readable
-            elif number_files == 0:
-                extent = "EMPTY"
-            else:
-                extent = "%d digital files (%s)" % (number_files, size_readable)
-
-            # build date statement
-            if mdates:
-                date_earliest = min(mdates)[:10]
-                date_latest = max(mdates)[:10]
-            else:
-                date_earliest = 'N/A'
-                date_latest = 'N/A'
-            if date_earliest == date_latest:
-                date_statement = '%s' % date_earliest[:4]
-            else:
-                date_statement = '%s - %s' % (date_earliest[:4], date_latest[:4])
-
-            # gather info from burnnhilde & write scope and content note
-            if extent == 'EMPTY':
-                scopecontent = ''
-            else:
-                fileformats = []
-                if bagfiles == True:
-                    fileformat_csv = os.path.join(item, 'data', 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(item), 'csv_reports', 'formats.csv')
-                else:
-                    fileformat_csv = os.path.join(item, 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(item), 'csv_reports', 'formats.csv')
-                with open(fileformat_csv, 'r') as f:
-                    reader = csv.reader(f)
-                    reader.next()
-                    for row in itertools.islice(reader, 5):
-                        fileformats.append(row[0])
-                fileformats = [element or 'Unidentified' for element in fileformats] # replace empty elements with 'Unidentified'
-                formatlist = ', '.join(fileformats) # format list of top file formats as human-readable
-                
-                # create scope and content note
-                scopecontent = 'Files from directory titled "%s". Most common file formats: %s' % (os.path.basename(item), formatlist)
-
-            # write csv row
-            writer.writerow(['', item, '', '', date_statement, date_earliest, date_latest, 'File', extent, 
-                scopecontent, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''])
+        # write csv row
+        writer.writerow(['', os.path.basename(sip_dir), '', '', date_statement, date_earliest, date_latest, 'File', extent, 
+            scopecontent, '', '', '', '', '', '', '', '', '', '', '', '', '', '', '', ''])
 
         # close description spreadsheet
         spreadsheet.close()
 
     def run(self):
-        self.create_sip(self.files_to_process, self.destination, self.bagfiles, self.piiscan)
+        self.create_sip(self.files_to_process, self.sip_dir, self.bagfiles, self.piiscan)
         self.emit(SIGNAL('increment_progress_bar(QString)'), '')
-        self.create_spreadsheet(self.destination, self.bagfiles)
+        self.create_spreadsheet(self.destination, self.sip_dir, self.bagfiles)
 
 
 class ProcessorApp(QMainWindow, design.Ui_MainWindow):
@@ -280,9 +274,12 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
 
         # create output directories
         destination = str(self.destination.text())
+        sip_name = str(self.sipName.text())
+        sip_dir = os.path.join(destination, sip_name)
 
         if not os.path.exists(destination):
             os.makedirs(destination)
+        os.makedirs(sip_dir)
 
         # handle argument checkboxes
         bagfiles = False
@@ -292,8 +289,8 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         if self.bulkExt.isChecked():
             piiscan = True
 
-        # create SIP for each item in list and spreadsheet describing all created SIPs
-        self.get_thread = SIPThread(files_to_process, destination, bagfiles, piiscan)
+        # create SIP for each sip_dir in list and spreadsheet describing all created SIPs
+        self.get_thread = SIPThread(files_to_process, destination, sip_dir, bagfiles, piiscan)
         self.connect(self.get_thread, SIGNAL("increment_progress_bar(QString)"), self.increment_progress_bar)
         self.connect(self.get_thread, SIGNAL("finished()"), self.done)
         self.get_thread.start()
