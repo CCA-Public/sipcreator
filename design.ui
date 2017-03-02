@@ -18,7 +18,7 @@
     <item row="10" column="0" colspan="2">
      <widget class="QLineEdit" name="sipName">
       <property name="placeholderText">
-       <string>Name of SIP (e.g. ARCH123456---AR2017.0999)</string>
+       <string>Name of SIP (Identifier---Accession Number)</string>
       </property>
      </widget>
     </item>

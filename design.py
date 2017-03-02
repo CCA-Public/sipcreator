@@ -89,7 +89,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(_translate("MainWindow", "SIP Creator", None))
-        self.sipName.setPlaceholderText(_translate("MainWindow", "Name of SIP (e.g. ARCH123456---AR2017.0999)", None))
+        self.sipName.setPlaceholderText(_translate("MainWindow", "Name of SIP (Identifier---Accession Number)", None))
         self.bagSIPs.setText(_translate("MainWindow", "Bag SIP", None))
         self.cancelBtn.setText(_translate("MainWindow", "Cancel", None))
         self.bulkExt.setText(_translate("MainWindow", "Run bulk_extractor", None))
