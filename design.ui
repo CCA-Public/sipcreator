@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>687</width>
-    <height>669</height>
+    <width>725</width>
+    <height>725</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -15,45 +15,52 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="13" column="0" colspan="2">
-     <widget class="QProgressBar" name="progressBar">
-      <property name="value">
-       <number>24</number>
+    <item row="10" column="0" colspan="2">
+     <widget class="QLineEdit" name="sipName">
+      <property name="placeholderText">
+       <string>Name of SIP (e.g. ARCH123456---AR2017.0999)</string>
       </property>
      </widget>
     </item>
-    <item row="9" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item row="10" column="0">
+    <item row="12" column="0">
      <widget class="QCheckBox" name="bagSIPs">
       <property name="text">
        <string>Bag SIP</string>
       </property>
      </widget>
     </item>
-    <item row="17" column="1">
+    <item row="19" column="1">
      <widget class="QPushButton" name="cancelBtn">
       <property name="text">
        <string>Cancel</string>
       </property>
      </widget>
     </item>
-    <item row="11" column="0">
+    <item row="13" column="0">
      <widget class="QCheckBox" name="bulkExt">
       <property name="text">
        <string>Run bulk_extractor</string>
       </property>
      </widget>
     </item>
+    <item row="15" column="0" colspan="2">
+     <widget class="QProgressBar" name="progressBar">
+      <property name="value">
+       <number>24</number>
+      </property>
+     </widget>
+    </item>
+    <item row="11" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Options&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
     <item row="7" column="0">
      <widget class="QLabel" name="label_3">
       <property name="text">
-       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Destination&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Output Directory&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
@@ -71,17 +78,17 @@
       </property>
      </widget>
     </item>
-    <item row="12" column="0">
+    <item row="14" column="0">
      <widget class="QLabel" name="label_4">
       <property name="text">
        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;Status&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
-    <item row="14" column="0" colspan="2">
+    <item row="16" column="0" colspan="2">
      <widget class="QLineEdit" name="status"/>
     </item>
-    <item row="17" column="0">
+    <item row="19" column="0">
      <widget class="QPushButton" name="processBtn">
       <property name="text">
        <string>Create SIP</string>
@@ -109,6 +116,13 @@
      <widget class="QPushButton" name="sourceBtn">
       <property name="text">
        <string>Select source</string>
+      </property>
+     </widget>
+    </item>
+    <item row="9" column="0">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;SIP Name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
      </widget>
     </item>
