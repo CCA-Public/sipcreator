@@ -1,2 +1,2 @@
 #!/bin/bash
-python /usr/share/cca-sipcreator/main.py
+python /usr/share/ccatools/sipcreator/main.py
