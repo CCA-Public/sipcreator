@@ -256,7 +256,6 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         self.progressBar.setValue(self.progressBar.value()+1)
         QMessageBox.information(self, "Done!", "Process complete.")
         self.status.setText('Finished')
-        self.progressBar.setValue(0)
 
     def start_processing(self):
         # acknowledge process has started
@@ -266,10 +265,11 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         files_to_process = []
         for index,value in self.model.checks.items():
             if value.toBool():
-                files_to_process.append(str(self.model.filePath(index)))
+                unicode_filename = unicode(self.model.filePath(index).toUtf8(), encoding="utf-8")
+                files_to_process.append(unicode_filename)
 
         # prepare progress bar
-        self.progressBar.setMaximum(len(files_to_process)+1)
+        self.progressBar.setMaximum(2)
         self.progressBar.setValue(0)
 
         # create output directories
