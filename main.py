@@ -19,6 +19,7 @@ import os
 import shutil
 import subprocess
 import sys
+import xml.etree.ElementTree as ET
 from time import localtime, strftime
 
 import design
@@ -142,29 +143,32 @@ class SIPThread(QThread):
         except:
             sys.exit('There was an error creating the processing spreadsheet.')
 
-        # gather info from files
-        if bagfiles == True:
-            objects = os.path.abspath(os.path.join(sip_dir, 'data', 'objects'))
-        else:
-            objects = os.path.abspath(os.path.join(sip_dir, 'objects'))
-
-
-
+        # intialize values
         number_files = 0
         total_bytes = 0
-        mdates = []
+        mtimes = []
+        ctimes = []
+        atimes = []
 
-        for root, directories, filenames in os.walk(objects):
-            for filename in filenames:
-                # add to file count
-                number_files += 1
-                # add number of bytes to total
-                filepath = os.path.join(root, filename)
-                total_bytes += os.path.getsize(filepath)
-                # add modified date to list
-                modified = os.path.getmtime(filepath)
-                modified_date = str(datetime.datetime.fromtimestamp(modified))
-                mdates.append(modified_date)
+        # parse dfxml file
+        if bagfiles == True:
+            dfxml_file = os.path.abspath(os.path.join(sip_dir, 'data', 'metadata', 'submissionDocumentation', 'dfxml.xml'))
+        else:
+            dfxml_file = os.path.abspath(os.path.join(sip_dir, 'metadata', 'submissionDocumentation', 'dfxml.xml'))
+
+        dfxml_tree = ET.parse(dfxml_file)
+        dfxml_root = dfxml_tree.getroot()
+
+        #read data from each dfxml fileobject
+        for target in dfxml_root.findall("fileobject"):
+            number_files +=1
+            total_bytes += int(target.find("filesize").text)
+            if target.find("mtime").text is not None:
+                mtimes.append(target.find("mtime").text)
+            if target.find("ctime").text is not None:
+                ctimes.append(target.find("ctime").text)
+            if target.find("atime").text is not None:
+                atimes.append(target.find("atime").text)
 
         # build extent statement
         size_readable = self.convert_size(total_bytes)
@@ -176,9 +180,9 @@ class SIPThread(QThread):
             extent = "%d digital files (%s)" % (number_files, size_readable)
 
         # build date statement
-        if mdates:
-            date_earliest = min(mdates)[:10]
-            date_latest = max(mdates)[:10]
+        if mtimes:
+            date_earliest = min(mtimes)
+            date_latest = max(mtimes)
         else:
             date_earliest = 'N/A'
             date_latest = 'N/A'
