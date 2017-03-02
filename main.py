@@ -91,13 +91,16 @@ class SIPThread(QThread):
                 except shutil.Error as e:
                     print("WARNING: Error copying file " + file_to_process + " : " + e) #TODO improve error handling
 
-        # run brunnhilde and write to submissionDocumentation directory
+        # run brunnhilde and write to submissionDocumentation
         files_abs = os.path.abspath(object_dir)
 
         if piiscan == True: # brunnhilde with bulk_extractor
             subprocess.call("brunnhilde.py -zbw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(sip_dir)), shell=True)
         else: # brunnhilde without bulk_extractor
             subprocess.call("brunnhilde.py -zw '%s' '%s' '%s_brunnhilde'" % (files_abs, subdoc_dir, os.path.basename(sip_dir)), shell=True)
+
+        # create dfxml and write to submissionDocumentation
+        subprocess.call("md5deep -rd %s > %s" % (object_dir, os.path.join(subdoc_dir, 'dfxml.xml')), shell=True)
 
         # write checksums
         if bagfiles == True: # bag entire SIP
@@ -144,6 +147,8 @@ class SIPThread(QThread):
             objects = os.path.abspath(os.path.join(sip_dir, 'data', 'objects'))
         else:
             objects = os.path.abspath(os.path.join(sip_dir, 'objects'))
+
+
 
         number_files = 0
         total_bytes = 0
