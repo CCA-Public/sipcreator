@@ -149,8 +149,6 @@ class SIPThread(QThread):
         number_files = 0
         total_bytes = 0
         mtimes = []
-        ctimes = []
-        atimes = []
 
         # parse dfxml file
         if bagfiles == True:
@@ -173,20 +171,7 @@ class SIPThread(QThread):
                 mtime = ''
             mtime = str(mtime)
             mtimes.append(mtime)
-
-            ctime = obj.crtime
-            if not ctime:
-                ctime = ''
-            ctime = str(ctime)
-            ctimes.append(ctime)
-
-            atime = obj.atime
-            if not atime:
-                atime = ''
-            atime = str(atime)
-            atimes.append(atime)
-
-            fname = obj.filename
+            
             total_bytes += obj.filesize
 
         # build extent statement
