@@ -17,6 +17,7 @@ sudo mv main.py /usr/share/ccatools/sipcreator
 sudo mv launch /usr/share/ccatools/sipcreator
 sudo mv design.py /usr/share/ccatools/sipcreator
 sudo mv design.ui /usr/share/ccatools/sipcreator
+sudo mv icon.png /usr/share/ccatools/sipcreator
 sudo mv LICENSE /usr/share/ccatools/sipcreator
 sudo mv README.md /usr/share/ccatools/sipcreator
 
@@ -31,7 +32,7 @@ echo '[Desktop Entry]' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP 
 echo 'Type=Application' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo 'Name=SIP Creator' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 echo 'Exec=/usr/share/ccatools/sipcreator/launch' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Icon=' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
+echo 'Icon=/usr/share/ccatools/sipcreator/icon.png' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
 
 # Change permissions, ownership for CCA Tools
 sudo chown -R bcadmin:bcadmin '/home/bcadmin/Desktop/CCA Tools'
