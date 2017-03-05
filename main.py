@@ -3,7 +3,6 @@
 
 """
 CCA SIP Creator
-Version 1.0.0
 
 Tim Walsh 2017
 MIT License
@@ -199,7 +198,7 @@ class SIPThread(QThread):
         else:
             extent = "%d digital files (%s)" % (number_files, size_readable)
 
-        # build date statement
+        # build date statement TODO: utilize all MAC dates, not just modified
         if mtimes:
             date_earliest = min(mtimes)
             date_latest = max(mtimes)
