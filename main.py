@@ -19,10 +19,13 @@ import os
 import shutil
 import subprocess
 import sys
-import xml.etree.ElementTree as ET
 from time import localtime, strftime
 
 import design
+
+#import Objects.py from python dfxml tools
+sys.path.append('/usr/share/dfxml/python')
+import Objects
 
 class CheckableDirModel(QDirModel):
     # class to put checkbox on the folders
@@ -156,19 +159,36 @@ class SIPThread(QThread):
         else:
             dfxml_file = os.path.abspath(os.path.join(sip_dir, 'metadata', 'submissionDocumentation', 'dfxml.xml'))
 
-        dfxml_tree = ET.parse(dfxml_file)
-        dfxml_root = dfxml_tree.getroot()
+        # gather info for each FileObject
+        for (event, obj) in Objects.iterparse(dfxml_file):
+            
+            # only work on FileObjects
+            if not isinstance(obj, Objects.FileObject):
+                continue
+            
+            # gather info
+            number_files += 1
 
-        #read data from each dfxml fileobject
-        for target in dfxml_root.findall("fileobject"):
-            number_files +=1
-            total_bytes += int(target.find("filesize").text)
-            if target.find("mtime").text is not None:
-                mtimes.append(target.find("mtime").text)
-            if target.find("ctime").text is not None:
-                ctimes.append(target.find("ctime").text)
-            if target.find("atime").text is not None:
-                atimes.append(target.find("atime").text)
+            mtime = obj.mtime
+            if not mtime:
+                mtime = ''
+            mtime = str(mtime)
+            mtimes.append(mtime)
+
+            ctime = obj.crtime
+            if not ctime:
+                ctime = ''
+            ctime = str(ctime)
+            ctimes.append(ctime)
+
+            atime = obj.atime
+            if not atime:
+                atime = ''
+            atime = str(atime)
+            atimes.append(atime)
+
+            fname = obj.filename
+            total_bytes += obj.filesize
 
         # build extent statement
         size_readable = self.convert_size(total_bytes)
