@@ -109,7 +109,7 @@ def create_spreadsheet(destination, sip_dir, bagfiles):
             fileformat_csv = os.path.join(sip_dir, 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(sip_dir), 'csv_reports', 'formats.csv')
         with open(fileformat_csv, 'r') as f:
             reader = csv.reader(f)
-            reader.next()
+            next(reader)
             for row in itertools.islice(reader, 5):
                 fileformats.append(row[0])
         fileformats = [element or 'Unidentified' for element in fileformats] # replace empty elements with 'Unidentified'
