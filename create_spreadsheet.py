@@ -10,6 +10,7 @@ MIT License
 
 import argparse
 import csv
+import itertools
 import math
 import os
 import sys

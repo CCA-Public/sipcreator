@@ -11,7 +11,6 @@ MIT License
 from PyQt4.QtGui import *
 from PyQt4.QtCore import * 
 import datetime
-import itertools
 import os
 import shutil
 import subprocess
