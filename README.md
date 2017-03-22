@@ -10,5 +10,6 @@ SIP Creator can optionally also run a PII scan of each SIP using bulk_extractor 
 
 ### Installation  
 
-This utility is designed for easy use in Bitcurator, and in v1.8.0+ requires installation of only [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download): 
+This utility is designed for easy use in Bitcurator, and in v1.8.0+ requires installation of only [PyQt4](https://www.riverbankcomputing.com/software/pyqt/download):  
+
 `sudo apt-get install python-qt4`  
