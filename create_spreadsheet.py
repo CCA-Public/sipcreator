@@ -129,7 +129,7 @@ def create_spreadsheet(destination, sip_dir, bagfiles):
 
 # parse arguments
 parser = argparse.ArgumentParser()
-parser.add_argument("-b", help="Bag files instead of writing checksum.md5", action="store_true")
+parser.add_argument("-b", "--bagfiles", help="Bag files instead of writing checksum.md5", action="store_true")
 parser.add_argument("destination", help="Destination directory for CSV file")
 parser.add_argument("sip_dir", help="SIP to gather information about")
 args = parser.parse_args()
