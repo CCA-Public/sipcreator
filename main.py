@@ -111,9 +111,9 @@ class SIPThread(QThread):
     def create_spreadsheet(self, destination, sip_dir, bagfiles):
 
         if bagfiles == True:
-            subprocess.call("python3 /usr/share/ccatools/sipcreator/create_spreadsheet.py -b %s %s" % (destination, sip_dir), shell=True)
+            subprocess.call("python3 /usr/share/ccatools/sipcreator/create_spreadsheet.py -b '%s' '%s'" % (destination, sip_dir), shell=True)
         else:
-            subprocess.call("python3 /usr/share/ccatools/sipcreator/create_spreadsheet.py %s %s" % (destination, sip_dir), shell=True)
+            subprocess.call("python3 /usr/share/ccatools/sipcreator/create_spreadsheet.py '%s' '%s'" % (destination, sip_dir), shell=True)
 
     def run(self):
         self.create_sip(self.files_to_process, self.sip_dir, self.bagfiles, self.piiscan)
