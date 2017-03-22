@@ -136,5 +136,9 @@ args = parser.parse_args()
 
 destination = args.destination
 
+bagfiles = False
+if args.bagiles:
+    bagfiles = True
+
 # call create_spreadsheet
-create_spreadsheet(args.destination, args.sip_dir, args.bagfiles)
+create_spreadsheet(args.destination, args.sip_dir, bagfiles)
