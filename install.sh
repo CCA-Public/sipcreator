@@ -15,6 +15,7 @@ fi
 # Move files into /usr/share/cca-folderprocessor
 sudo mv main.py /usr/share/ccatools/sipcreator
 sudo mv launch /usr/share/ccatools/sipcreator
+sudo mv create_spreadsheet.py /usr/share/ccatools/sipcreator
 sudo mv design.py /usr/share/ccatools/sipcreator
 sudo mv design.ui /usr/share/ccatools/sipcreator
 sudo mv icon.png /usr/share/ccatools/sipcreator
