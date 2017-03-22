@@ -89,8 +89,8 @@ def create_spreadsheet(destination, sip_dir, bagfiles):
 
     # build date statement TODO: utilize all MAC dates, not just modified
     if mtimes:
-        date_earliest = min(mtimes)
-        date_latest = max(mtimes)
+        date_earliest = min(mtimes)[:10]
+        date_latest = max(mtimes)[:10]
     else:
         date_earliest = 'N/A'
         date_latest = 'N/A'
