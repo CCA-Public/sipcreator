@@ -105,9 +105,9 @@ def create_spreadsheet(destination, sip_dir, bagfiles):
     else:
         fileformats = []
         if bagfiles == True:
-            fileformat_csv = os.path.join(sip_dir, 'data', 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(sip_dir), 'csv_reports', 'formats.csv')
+            fileformat_csv = os.path.join(sip_dir, 'data', 'metadata', 'submissionDocumentation', 'brunnhilde', 'csv_reports', 'formats.csv')
         else:
-            fileformat_csv = os.path.join(sip_dir, 'metadata', 'submissionDocumentation', '%s_brunnhilde' % os.path.basename(sip_dir), 'csv_reports', 'formats.csv')
+            fileformat_csv = os.path.join(sip_dir, 'metadata', 'submissionDocumentation', 'brunnhilde', 'csv_reports', 'formats.csv')
         with open(fileformat_csv, 'r') as f:
             reader = csv.reader(f)
             next(reader)
