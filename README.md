@@ -10,7 +10,7 @@ SIP Creator can optionally also run a PII scan of each SIP using bulk_extractor 
 
 ## Installation
 
-This utility is designed for easy use in Bitcurator v1.8.0+.  
+This utility is designed for easy use in Bitcurator v1.8.0+. It requires Python 2.7 (to run the GUI) and Python 3.4+ (to analyze DFXML), both of which are already included in Bitcurator.  
 
 ### Install as part of CCA Tools  
 
