@@ -96,7 +96,7 @@ class SIPThread(QThread):
             subprocess.call("brunnhilde.py -zw '%s' '%s' brunnhilde" % (files_abs, subdoc_dir), shell=True)
 
         # create dfxml and write to submissionDocumentation
-        subprocess.call("cd '%s' python3 /usr/share/dfxml/python/walk_to_dfxml.py > '%s'" % (object_dir, os.path.join(subdoc_dir, 'dfxml.xml')), shell=True)
+        subprocess.call("cd '%s' && python3 /usr/share/dfxml/python/walk_to_dfxml.py > '%s'" % (object_dir, os.path.join(subdoc_dir, 'dfxml.xml')), shell=True)
 
         # write checksums
         if bagfiles == True: # bag entire SIP
