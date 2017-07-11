@@ -134,8 +134,15 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         # build start functionality
         self.processBtn.clicked.connect(self.start_processing)
 
+        # about menu functionality
+        self.actionAbout.triggered.connect(self.about_dialog)
+
         # set progress bar to 0
         self.progressBar.setValue(0)
+
+    def about_dialog(self):
+        QMessageBox.information(self, "About", 
+            "SIP Creator v0.2.0\nTim Walsh, 2017\nMIT License\nhttps://github.com/timothyryanwalsh/cca-sipcreator")
 
     def browse_source(self):
         source = QFileDialog.getExistingDirectory(self, "Select folder")

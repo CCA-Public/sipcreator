@@ -1,6 +1,7 @@
 # CCA SIP Creator
 
 **NOTE: This tool is in dev and should not be considered production-ready without testing**
+Version: 0.2.0 (beta)
 
 Creates an Archivematica-ready transfer (or SIP for another preservation repository) from user-selected directories and files, and generates a pre-populated description spreadsheet using data pulled from DFXML and Brunnhilde (start and end dates, extent, and a scope and content note containing information about the most common file formats present).  
 

@@ -83,6 +83,12 @@ class Ui_MainWindow(object):
         self.label_6.setObjectName(_fromUtf8("label_6"))
         self.gridLayout.addWidget(self.label_6, 9, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
+        self.toolBar = QtGui.QToolBar(MainWindow)
+        self.toolBar.setObjectName(_fromUtf8("toolBar"))
+        MainWindow.addToolBar(QtCore.Qt.TopToolBarArea, self.toolBar)
+        self.actionAbout = QtGui.QAction(MainWindow)
+        self.actionAbout.setObjectName(_fromUtf8("actionAbout"))
+        self.toolBar.addAction(self.actionAbout)
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -103,4 +109,6 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">Directory Selector</span></p></body></html>", None))
         self.sourceBtn.setText(_translate("MainWindow", "Select source", None))
         self.label_6.setText(_translate("MainWindow", "<html><head/><body><p><span style=\" font-weight:600;\">SIP Name</span></p></body></html>", None))
+        self.toolBar.setWindowTitle(_translate("MainWindow", "toolBar", None))
+        self.actionAbout.setText(_translate("MainWindow", "About", None))
 
