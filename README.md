@@ -1,4 +1,4 @@
-# CCA SIP Creator
+# SIP Creator
 
 **NOTE: This tool is in dev and should not be considered production-ready without testing**  
 Version: 0.2.0 (beta)
