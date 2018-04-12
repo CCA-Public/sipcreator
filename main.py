@@ -142,7 +142,7 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
 
     def about_dialog(self):
         QMessageBox.information(self, "About", 
-            "SIP Creator v0.2.0\nTim Walsh, 2017\nMIT License\nhttps://github.com/timothyryanwalsh/cca-sipcreator")
+            "SIP Creator v0.2.0\nCanadian Centre for Architecture, 2017\nMIT License\nhttps://github.com/timothyryanwalsh/cca-sipcreator")
 
     def browse_source(self):
         source = QFileDialog.getExistingDirectory(self, "Select folder")
