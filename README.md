@@ -17,8 +17,8 @@ This utility is designed for easy use in BitCurator v1.8.0+. It requires Python 
 Install all of the CCA Tools together using the installation script in the [CCA Tools repo](https://github.com/CCA-Public/cca-tools).  
 
 ### Install as a separate utlity
-* Install [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download):  
-`sudo apt-get install python3-qt5`  
+* Install [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5):  
+`sudo pip3 install pyqt5`  
 * Clone this repo to your local machine.  
 * Run the install script with sudo privileges:  
 `sudo chmod u+x install.sh`  
