@@ -7,10 +7,13 @@ if [ ! -d /usr/share/ccatools ]; then
   sudo mkdir /usr/share/ccatools
 fi
 
-# Make /usr/share/cca-folderprocessor if doesn't already exist
-if [ ! -d /usr/share/ccatools/sipcreator ]; then
-  sudo mkdir /usr/share/ccatools/sipcreator
+# Delete /usr/share directory for SIP Creator if it already exists
+if [ -d /usr/share/ccatools/sipcreator ]; then
+  sudo rm -rf /usr/share/ccatools/sipcreator
 fi
+
+# Make /usr/share directory for SIP Creator
+sudo mkdir /usr/share/ccatools/sipcreator
 
 # Move files into /usr/share/cca-folderprocessor
 sudo mv main.py /usr/share/ccatools/sipcreator
