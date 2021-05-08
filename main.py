@@ -4,7 +4,7 @@
 """
 CCA SIP Creator
 
-Tim Walsh 2017
+Tessa Walsh 2017
 MIT License
 """
 

@@ -4,7 +4,7 @@
 """
 Python3 program for generating a descriptive spreadsheet for a directory of SIPs.
 
-Tim Walsh 2017
+Tessa Walsh 2017
 MIT License
 """
 
