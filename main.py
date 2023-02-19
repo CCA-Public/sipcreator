@@ -3,7 +3,7 @@ CCA SIP Creator
 
 (c) Canadian Centre for Architecture
 Developed by Tessa Walsh
-2017-2021
+2017-2023
 MIT License
 """
 import csv
@@ -325,7 +325,7 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         QMessageBox.information(
             self,
             "About",
-            "SIP Creator v1.0.0\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2021\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
+            "SIP Creator v1.1.0\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2023\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
         )
 
     def browse_source(self):
