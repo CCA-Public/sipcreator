@@ -8,7 +8,7 @@ if [ ! -d /usr/share/ccatools ]; then
   sudo mkdir /usr/share/ccatools
 fi
 
-sipcreator_dir="/usr/share/ccatools/sipcreator"
+sipcreator_dir="/usr/share/ccatools/sipcreator/"
 
 if [ -d $sipcreator_dir ]; then
   sudo rm -rf $sipcreator_dir
