@@ -1,54 +1,41 @@
 #!/bin/bash
 
-### Install script for CCA SIP Creator in Bitcurator
+### Install script for CCA Disk Image Processor in Bitcurator 4/Ubuntu 22
 
-# Update submodules
 git submodule update --init --recursive
 
-# Make /usr/share/ccatools if doesn't already exist
 if [ ! -d /usr/share/ccatools ]; then
   sudo mkdir /usr/share/ccatools
 fi
 
-# Delete /usr/share directory for SIP Creator if it already exists
-if [ -d /usr/share/ccatools/sipcreator ]; then
-  sudo rm -rf /usr/share/ccatools/sipcreator
+sipcreator_dir="/usr/share/ccatools/sipcreator"
+
+if [ -d $sipcreator_dir ]; then
+  sudo rm -rf $sipcreator_dir
 fi
 
-# Make /usr/share directory for SIP Creator
-sudo mkdir /usr/share/ccatools/sipcreator
+sudo mkdir $sipcreator_dir
 
-# Move files into /usr/share/ccatools/sipcreator
-sudo cp main.py /usr/share/ccatools/sipcreator
-sudo cp launch /usr/share/ccatools/sipcreator
-sudo cp design.py /usr/share/ccatools/sipcreator
-sudo cp design.ui /usr/share/ccatools/sipcreator
-sudo cp icon.png /usr/share/ccatools/sipcreator
-sudo cp LICENSE /usr/share/ccatools/sipcreator
-sudo cp README.md /usr/share/ccatools/sipcreator
-sudo cp deps/dfxml/python/dfxml.py /usr/share/ccatools/sipcreator
-sudo cp deps/dfxml/python/Objects.py /usr/share/ccatools/sipcreator
-sudo cp deps/dfxml/python/walk_to_dfxml.py /usr/share/ccatools/sipcreator
-
-# Make "CCA Tools" folder on Desktop if doesn't already exist
-if [ ! -d "/home/bcadmin/Desktop/CCA Tools" ]; then
-  sudo mkdir "/home/bcadmin/Desktop/CCA Tools"
-fi
+sudo cp main.py $sipcreator_dir
+sudo cp launch $sipcreator_dir
+sudo cp design.py $sipcreator_dir
+sudo cp design.ui $sipcreator_dir
+sudo cp icon.png $sipcreator_dir
+sudo cp LICENSE $sipcreator_dir
+sudo cp README.md $sipcreator_dir
+sudo cp deps/dfxml/python/dfxml.py $sipcreator_dir
+sudo cp deps/dfxml/python/Objects.py $sipcreator_dir
+sudo cp deps/dfxml/python/walk_to_dfxml.py $sipcreator_dir
 
 # Create launch.desktop file
-sudo touch '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo '[Desktop Entry]' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Type=Application' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Name=SIP Creator' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Exec=/usr/share/ccatools/sipcreator/launch' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
-echo 'Icon=/usr/share/ccatools/sipcreator/icon.png' | sudo tee --append '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
+launch_file="/usr/share/applications/SIPCreator.desktop"
+sudo touch $launch_file
+echo '[Desktop Entry]' | sudo tee --append $launch_file
+echo 'Type=Application' | sudo tee --append $launch_file
+echo 'Name=SIP Creator' | sudo tee --append $launch_file
+echo 'Exec=/usr/share/ccatools/sipcreator/launch' | sudo tee --append $launch_file
+echo 'Icon=/usr/share/ccatools/sipcreator/icon.png' | sudo tee --append $launch_file
+echo 'Categories=Forensics and Reporting' | sudo tee --append $launch_file
 
-# Change permissions, ownership for CCA Tools
-sudo chown -R bcadmin:bcadmin '/home/bcadmin/Desktop/CCA Tools'
-sudo chown -R bcadmin:bcadmin '/usr/share/ccatools/sipcreator'
-sudo find '/home/bcadmin/Desktop/CCA Tools' -type d -exec chmod 755 {} \;
-sudo find '/home/bcadmin/Desktop/CCA Tools' -type f -exec chmod 644 {} \;
-
-# Make files executable
-sudo chmod u+x '/home/bcadmin/Desktop/CCA Tools/SIP Creator.desktop'
+sudo chown -R bcadmin:bcadmin $sipcreator_dir
 sudo chmod u+x /usr/share/ccatools/sipcreator/launch
