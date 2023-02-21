@@ -165,7 +165,7 @@ class SIPThread(QThread):
             # TODO: Multithread bagging via --processes when bug described at
             # https://github.com/LibraryOfCongress/bagit-python/issues/130 is
             # resolved.
-            subprocess.call("bagit.py '{}'".format(sip_dir), shell=True)
+            subprocess.call("cd ~ && bagit.py '{}'".format(sip_dir), shell=True)
         else:
             md5deep_cmd = "cd '{}' && md5deep -rl ../objects > checksum.md5".format(
                 metadata_dir
