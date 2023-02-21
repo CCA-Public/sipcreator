@@ -230,7 +230,7 @@ class SIPThread(QThread):
             date_earliest = min(mtimes)[:10]
             date_latest = max(mtimes)[:10]
         date_statement = "{} - {}".format(date_earliest[:4], date_latest[:4])
-        if date_earliest == date_latest:
+        if date_earliest[:4] == date_latest[:4]:
             date_statement = date_earliest[:4]
 
         # Write scope and content note from information in brunnhilde reports.
