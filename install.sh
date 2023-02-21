@@ -29,6 +29,11 @@ sudo cp deps/dfxml/python/walk_to_dfxml.py $sipcreator_dir
 
 # Create launch.desktop file
 launch_file="/usr/share/applications/SIPCreator.desktop"
+
+if [ -f $launch_file ]; then
+  sudo rm -rf $launch_file
+fi
+
 sudo touch $launch_file
 echo '[Desktop Entry]' | sudo tee --append $launch_file
 echo 'Type=Application' | sudo tee --append $launch_file
