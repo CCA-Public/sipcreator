@@ -1,6 +1,6 @@
 # SIP Creator
 
-Version: 1.0.0
+Version: 1.1.0
 
 Creates an Archivematica-ready transfer (or SIP for another preservation repository) from user-selected directories and files, and generates a pre-populated description spreadsheet using data pulled from DFXML and Brunnhilde (start and end dates, extent, and a scope and content note containing information about the most common file formats present).  
 
@@ -16,12 +16,12 @@ This utility is designed for easy use in BitCurator v1.8.0+. It requires Python 
 
 Install all of the CCA Tools together using the installation script in the [CCA Tools repo](https://github.com/CCA-Public/cca-tools).  
 
-### Install as a separate utlity
+### Install as a separate utility
+
 * Install [PyQt5](https://www.riverbankcomputing.com/software/pyqt/download5):  
 `sudo pip3 install pyqt5`  
 * Clone this repo to your local machine.  
-* Run the install script with sudo privileges:  
-`sudo chmod u+x install.sh`  
+* Run the install script with sudo privileges (assuming BitCurator 4; for BitCurator 2-3 run `./install-bc2-ubuntu18.sh` instead):  
 `sudo ./install.sh`
 
 ### PyQt4 version

@@ -3,7 +3,7 @@ CCA SIP Creator
 
 (c) Canadian Centre for Architecture
 Developed by Tessa Walsh
-2017-2021
+2017-2023
 MIT License
 """
 import csv
@@ -63,7 +63,7 @@ def convert_size(size):
     s = round(size / p)
     s = str(s)
     s = s.replace(".0", "")
-    return "%s %s" % (s, size_name[i])
+    return "{} {}".format(s, size_name[i])
 
 
 class CheckableDirModel(QDirModel):
@@ -162,7 +162,10 @@ class SIPThread(QThread):
 
         # Bag files or write checksum manifest.
         if bag_files:
-            subprocess.call("bagit.py --processes 4 '{}'".format(sip_dir), shell=True)
+            # TODO: Multithread bagging via --processes when bug described at
+            # https://github.com/LibraryOfCongress/bagit-python/issues/130 is
+            # resolved.
+            subprocess.call("cd ~ && bagit.py '{}'".format(sip_dir), shell=True)
         else:
             md5deep_cmd = "cd '{}' && md5deep -rl ../objects > checksum.md5".format(
                 metadata_dir
@@ -226,8 +229,8 @@ class SIPThread(QThread):
         if mtimes:
             date_earliest = min(mtimes)[:10]
             date_latest = max(mtimes)[:10]
-        date_statement = "{} - {}".format(date_earliest[:4], date_latest[:4])
-        if date_earliest == date_latest:
+        date_statement = "{}-{}".format(date_earliest[:4], date_latest[:4])
+        if date_earliest[:4] == date_latest[:4]:
             date_statement = date_earliest[:4]
 
         # Write scope and content note from information in brunnhilde reports.
@@ -259,7 +262,7 @@ class SIPThread(QThread):
                     file_formats.append(row[0])
             file_formats = [format_ or "Unidentified" for format_ in file_formats]
             formats_list = ", ".join(file_formats)
-            scope_content = 'Original directory name: "{}". Most common file formats: {}'.format(
+            scope_content = "Most common file formats: {}".format(
                 os.path.basename(sip_path), formats_list
             )
 
@@ -325,7 +328,7 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         QMessageBox.information(
             self,
             "About",
-            "SIP Creator v1.0.0\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2021\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
+            "SIP Creator v1.1.0\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2023\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
         )
 
     def browse_source(self):
