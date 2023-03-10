@@ -10,7 +10,7 @@ SIP Creator can optionally also run a PII scan of each SIP using bulk_extractor 
 
 ## Installation
 
-This utility is designed for easy use in BitCurator v1.8.0+. It requires Python 3 and PyQt5.  
+This utility is designed for easy use in BitCurator 4. It requires Python 3.7+ and PyQt5.
 
 ### Install as part of CCA Tools  
 
