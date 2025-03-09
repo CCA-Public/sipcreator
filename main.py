@@ -262,9 +262,7 @@ class SIPThread(QThread):
                     file_formats.append(row[0])
             file_formats = [format_ or "Unidentified" for format_ in file_formats]
             formats_list = ", ".join(file_formats)
-            scope_content = "Most common file formats: {}".format(
-                os.path.basename(sip_path), formats_list
-            )
+            scope_content = "Most common file formats: {}".format(formats_list)
 
         writer.writerow(
             [
