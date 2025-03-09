@@ -208,8 +208,11 @@ class SIPThread(QThread):
         for (event, obj) in Objects.iterparse(dfxml_file):
             if not isinstance(obj, Objects.FileObject):
                 continue
-            if obj.is_dir():
+            
+            # skip directories and links
+            if obj.name_type and obj.name_type != "r":
                 continue
+
             file_count += 1
             mtime = ""
             if obj.mtime:
