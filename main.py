@@ -262,9 +262,7 @@ class SIPThread(QThread):
                     file_formats.append(row[0])
             file_formats = [format_ or "Unidentified" for format_ in file_formats]
             formats_list = ", ".join(file_formats)
-            scope_content = 'Original directory name: "{}". Most common file formats: {}'.format(
-                os.path.basename(sip_path), formats_list
-            )
+            scope_content = "Most common file formats: {}".format(formats_list)
 
         writer.writerow(
             [
@@ -328,7 +326,7 @@ class ProcessorApp(QMainWindow, design.Ui_MainWindow):
         QMessageBox.information(
             self,
             "About",
-            "SIP Creator v1.1.1\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2023\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
+            "SIP Creator v1.1.2\nCanadian Centre for Architecture\nDeveloper: Tessa Walsh\n2018-2023\nMIT License\nhttps://github.com/CCA-Public/sipcreator",
         )
 
     def browse_source(self):
